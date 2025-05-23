@@ -1,17 +1,9 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const authController = require('../controllers/authController');
+const validate = require('../middlewares/validateMiddleware');
 
 const router = express.Router();
-
-// Validation middleware
-const validate = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  next();
-};
 
 // Login
 router.post(
