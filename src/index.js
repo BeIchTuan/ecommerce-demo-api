@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const pool = require('./config/db');
 require('dotenv').config();
 const apiRoutes = require('./routes/index');
@@ -7,6 +8,7 @@ const apiRoutes = require('./routes/index');
 const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cookieParser());
 
 app.set('db', pool);
 
@@ -21,7 +23,6 @@ app.use('/api', apiRoutes);
 
 // Error handling middleware
 app.use(handleErrors);
-
 
 // Start server
 const PORT = process.env.PORT || 3000;
