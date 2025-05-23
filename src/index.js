@@ -1,12 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
-const { Pool } = require('pg');
-const { body, param, query, validationResult } = require('express-validator');
+const pool = require('./config/db');
 require('dotenv').config();
+const apiRoutes = require('./routes/index');
 
 const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
+
+app.set('db', pool);
 
 // Middleware for error handling
 const handleErrors = (err, req, res, next) => {
@@ -14,8 +16,12 @@ const handleErrors = (err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 };
 
+// Mount API routes
+app.use('/api', apiRoutes);
+
 // Error handling middleware
 app.use(handleErrors);
+
 
 // Start server
 const PORT = process.env.PORT || 3000;
