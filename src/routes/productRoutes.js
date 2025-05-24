@@ -1,5 +1,5 @@
 const express = require('express');
-const { param, query, validationResult } = require('express-validator');
+const { param, query } = require('express-validator');
 const productController = require('../controllers/productController');
 const validate = require('../middlewares/validateMiddleware');
 
